@@ -4,8 +4,9 @@
     <meta charset="utf-8" />
     <title>Bevy Web</title>
   </head>
-  <body>
-    <canvas id="bevy"></canvas>
+  <body style="margin: 0; width: 100vw; height: 100vh">
+    <!-- Set display:block to remove scrollbars -->
+    <canvas id="bevy-canvas" style="display: block"></canvas>
     <script type="module">
       import init from "./bevy_app.js";
       init();
