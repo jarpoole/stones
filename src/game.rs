@@ -34,7 +34,7 @@ fn setup(
             // GLTF
             (
                 SceneRoot(
-                    asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/test.glb"))
+                    asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/board.glb"))
                 ),
                 RigidBody::Dynamic,
                 ColliderConstructorHierarchy::new(ColliderConstructor::TrimeshFromMesh),
