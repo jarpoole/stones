@@ -1,12 +1,14 @@
 use bevy::prelude::*;
 use bevy_panorbit_camera::{PanOrbitCamera, PanOrbitCameraPlugin};
 
+use crate::AppState;
+
 pub struct CameraPlugin;
 
 impl Plugin for CameraPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins(PanOrbitCameraPlugin)
-            .add_systems(Startup, setup);
+            .add_systems(OnEnter(AppState::Playing), setup);
     }
 }
 
@@ -19,5 +21,6 @@ fn setup(mut commands: Commands) {
             allow_upside_down: false,
             ..default()
         },
+        DespawnOnExit(AppState::Playing),
     ));
 }
