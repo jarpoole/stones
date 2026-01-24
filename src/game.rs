@@ -26,15 +26,19 @@ fn setup(
             // Static physics object with a collision shape
             (
                 RigidBody::Static,
-                Collider::cylinder(4.0, 0.1),
-                Mesh3d(meshes.add(Cylinder::new(4.0, 0.1))),
-                MeshMaterial3d(materials.add(Color::WHITE)),
+                //Collider::cylinder(4.0, 0.1),
+                // Mesh3d(meshes.add(Cylinder::new(4.0, 0.1))),
+                // MeshMaterial3d(materials.add(Color::WHITE)),
+                SceneRoot(
+                    asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/board.glb"))
+                ),
+                ColliderConstructorHierarchy::new(ColliderConstructor::TrimeshFromMesh),
                 Restitution::new(0.2),
             ),
             // GLTF
             (
                 SceneRoot(
-                    asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/board.glb"))
+                    asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/test.glb"))
                 ),
                 RigidBody::Dynamic,
                 ColliderConstructorHierarchy::new(ColliderConstructor::TrimeshFromMesh),
