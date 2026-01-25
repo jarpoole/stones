@@ -16,5 +16,14 @@
     "Cargo.lock": true
   },
   "rust-analyzer.check.command": "clippy",
-  "cSpell.words": ["debuginfo", "dotenv", "Gltf", "itertools"]
+  "cSpell.words": [
+    "blenderkit",
+    "debuginfo",
+    "dotenv",
+    "Gltf",
+    "itertools",
+    "Onshape",
+    "Outliner",
+    "rustup"
+  ]
 }
