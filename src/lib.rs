@@ -1,11 +1,11 @@
 use bevy::prelude::*;
 
 mod camera;
+mod controls;
 mod game;
 mod hud;
 mod menu;
 mod physics;
-mod picker;
 
 #[derive(States, Debug, Clone, Eq, PartialEq, Hash, Default)]
 pub enum AppState {
@@ -20,7 +20,7 @@ impl Plugin for AppPlugin {
     fn build(&self, app: &mut App) {
         app.init_state::<AppState>().add_plugins((
             camera::CameraPlugin,
-            picker::PickerPlugin,
+            controls::ControlsPlugin,
             physics::PhysicsPlugin,
             menu::MenuPlugin,
             game::GamePlugin,
