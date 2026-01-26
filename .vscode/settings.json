@@ -19,11 +19,14 @@
   "cSpell.words": [
     "blenderkit",
     "debuginfo",
+    "Despawn",
     "dotenv",
+    "Gameboard",
     "Gltf",
     "itertools",
     "Onshape",
     "Outliner",
-    "rustup"
+    "rustup",
+    "Trimesh"
   ]
 }
