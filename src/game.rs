@@ -38,6 +38,7 @@ fn setup(
                     should_block_lower: true,
                     ..default()
                 },
+                //Observer::new(on_board_click_handler),
                 children![(
                     Name::new("Collider"),
                     RigidBody::Static,
@@ -50,7 +51,6 @@ fn setup(
                     MeshMaterial3d(materials.add(Color::WHITE)),
                     Transform::from_xyz(0.0, 0.025, 0.0),
                     Visibility::Hidden,
-                    //Observer::new(on_board_click_handler) //Pickable::IGNORE,
                 )]
             ),
             // Light
@@ -65,10 +65,8 @@ fn setup(
     ));
 }
 
-/*
 fn on_board_click_handler(trigger: On<Pointer<Click>>, query: Query<&Name>) {
     if let Ok(name) = query.get(trigger.observer()) {
         println!("Clicked {}", name);
     }
 }
-    */
