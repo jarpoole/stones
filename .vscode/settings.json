@@ -17,6 +17,7 @@
   },
   "rust-analyzer.check.command": "clippy",
   "cSpell.words": [
+    "aabb",
     "blenderkit",
     "debuginfo",
     "Despawn",

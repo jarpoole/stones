@@ -39,6 +39,16 @@ fn setup(
                     ..default()
                 },
                 Observer::new(on_board_click_handler),
+                /*
+                ShowAabbGizmo {
+                    color: Some(Color::Srgba(Srgba {
+                        red: 1.0,
+                        green: 0.0,
+                        blue: 0.0,
+                        alpha: 0.0
+                    }))
+                },
+                */
                 children![(
                     Name::new("Collider"),
                     RigidBody::Static,
@@ -48,7 +58,6 @@ fn setup(
                     ),
                     Restitution::new(0.0),
                     ColliderConstructorHierarchy::new(ColliderConstructor::TrimeshFromMesh),
-                    MeshMaterial3d(materials.add(Color::WHITE)),
                     Transform::from_xyz(0.0, 0.025, 0.0),
                     Visibility::Hidden,
                 )]

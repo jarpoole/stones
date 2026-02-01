@@ -24,8 +24,9 @@ strip = "debuginfo"
 [dependencies]
 avian3d = { version = "0.5.0", features = ["collider-from-mesh"] }
 bevy = { version = "0.18.0", features = [
-    "asset_processor",
+    "3d",
+    "ui",
     "jpeg",
-    "mesh_picking",
+    "debug", # allows component names to be printed in the console
 ] }
 bevy_panorbit_camera = "0.34.0"
