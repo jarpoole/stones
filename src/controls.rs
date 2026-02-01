@@ -5,7 +5,7 @@ use avian3d::prelude::{
 use bevy::{picking::hover::PickingInteraction, prelude::*};
 use bevy_panorbit_camera::PanOrbitCamera;
 
-use crate::game::Gameboard;
+use crate::game::{Gameboard, PieceVariant, SpawnPieceOptions, spawn_piece};
 
 pub struct ControlsPlugin;
 
@@ -79,7 +79,6 @@ impl Default for PieceBundle {
     */
 
 fn draw_cursor(
-    mut mouse_events: MessageReader<Pointer<Click>>,
     camera_query: Single<(&Camera, &GlobalTransform)>,
     ground: Single<(Entity, &GlobalTransform), With<Gameboard>>,
     window: Single<&Window>,
@@ -120,20 +119,69 @@ fn draw_cursor(
                 )
             {
                 let point = ray.get_point(distance) + ground_transform.up() * 0.5;
-                commands.spawn((
-                    Name::new("Piece"),
-                    SceneRoot(
-                        asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/piece.glb")),
-                    ),
-                    RigidBody::Dynamic,
-                    ColliderConstructorHierarchy::new(
-                        // dramatically improves performance
-                        ColliderConstructor::ConvexDecompositionFromMesh,
-                    ),
-                    Restitution::new(0.0),
-                    Transform::from_xyz(point.x, point.y, point.z)
-                        .with_scale((1.3, 1.3, 1.3).into()),
-                ));
+            }
+        }
+    }
+}
+
+fn on_click(
+    mut mouse_events: MessageReader<Pointer<Click>>,
+    camera_query: Single<(&Camera, &GlobalTransform)>,
+    ground: Single<(Entity, &GlobalTransform), With<Gameboard>>,
+    window: Single<&Window>,
+    mut gizmos: Gizmos,
+    mut commands: Commands,
+    asset_server: Res<AssetServer>,
+    names: Query<&Name>,
+    parents: Query<&ChildOf>,
+) {
+    let (camera, camera_transform) = *camera_query;
+    let (ground, ground_transform) = *ground;
+
+    if let Some(cursor_position) = window.cursor_position()
+        // Calculate a ray pointing from the camera into the world based on the cursor's position.
+        && let Ok(ray) = camera.viewport_to_world(camera_transform, cursor_position)
+        // Calculate if and at what distance the ray is hitting the ground plane.
+        && let Some(distance) =
+            ray.intersect_plane(ground_transform.translation(), InfinitePlane3d::new(ground_transform.up()))
+    {
+        let point = ray.get_point(distance);
+
+        for mouse_event in mouse_events.read() {
+            info!("clicked : {:?}", names.get(mouse_event.entity));
+            let mouse_position = mouse_event.pointer_location.position;
+            if let Ok(ray) = camera.viewport_to_world(camera_transform, mouse_position)
+                && let Some(distance) = ray.intersect_plane(
+                    ground_transform.translation(),
+                    InfinitePlane3d::new(ground_transform.up()),
+                )
+            {
+                let point = ray.get_point(distance) + ground_transform.up() * 0.5;
+                spawn_piece(
+                    &mut commands,
+                    &asset_server,
+                    PieceVariant::NEUTRAL,
+                    point.x,
+                    point.y,
+                    point.z,
+                    1,
+                );
+                /*
+                    commands.spawn((
+                        Name::new("Piece"),
+                        SceneRoot(
+                            asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/piece.glb")),
+                        ),
+                        RigidBody::Dynamic,
+                        ColliderConstructorHierarchy::new(
+                            // dramatically improves performance
+                            ColliderConstructor::ConvexDecompositionFromMesh,
+                        ),
+                        Restitution::new(0.0),
+                        Transform::from_xyz(point.x, point.y, point.z)
+                            .with_scale((1.3, 1.3, 1.3).into()),
+                    ));
+                */
             }
         }
     }
