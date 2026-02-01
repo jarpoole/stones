@@ -3,7 +3,7 @@ use stones::AppPlugin;
 
 fn main() {
     App::new()
-        .add_plugins((
+        .add_plugins(
             DefaultPlugins
                 .set(WindowPlugin {
                     primary_window: Some(Window {
@@ -17,10 +17,9 @@ fn main() {
                     // https://github.com/bevyengine/bevy/issues/18002
                     // https://github.com/bevyengine/bevy/pull/10623
                     meta_check: AssetMetaCheck::Never,
-                    //file_path: "assets".into(),
                     ..default()
                 }),
-            AppPlugin,
-        ))
+        )
+        .add_plugins(AppPlugin)
         .run();
 }

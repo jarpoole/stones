@@ -26,6 +26,7 @@
     "itertools",
     "Onshape",
     "Outliner",
+    "panorbit",
     "rustup",
     "Trimesh"
   ]

@@ -1,5 +1,4 @@
 use avian3d::prelude::*;
-use bevy::picking::hover::PickingInteraction;
 use bevy::prelude::*;
 
 use crate::AppState;
@@ -17,7 +16,6 @@ impl Plugin for GamePlugin {
 
 fn setup(
     mut commands: Commands,
-    mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
     asset_server: Res<AssetServer>,
 ) {
@@ -28,35 +26,32 @@ fn setup(
         // need to explicitly set visibility because the board collider must be explicitly hidden
         // https://bevy.org/learn/errors/b0004/
         Visibility::Visible,
+        Name::new("Root"),
         children![
             (
                 Gameboard,
                 SceneRoot(
                     asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/board.glb"))
                 ),
+                Name::new("Board"),
+                Pickable {
+                    should_block_lower: true,
+                    ..default()
+                },
                 children![(
+                    Name::new("Collider"),
                     RigidBody::Static,
                     SceneRoot(
                         asset_server
                             .load(GltfAssetLabel::Scene(0).from_asset("models/board_collider.glb")),
                     ),
-                    Restitution::new(0.2),
+                    Restitution::new(0.0),
                     ColliderConstructorHierarchy::new(ColliderConstructor::TrimeshFromMesh),
                     MeshMaterial3d(materials.add(Color::WHITE)),
                     Transform::from_xyz(0.0, 0.025, 0.0),
-                    Visibility::Hidden
+                    Visibility::Hidden,
+                    //Observer::new(on_board_click_handler) //Pickable::IGNORE,
                 )]
-            ),
-            // GLTF
-            (
-                SceneRoot(
-                    asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/piece.glb"))
-                ),
-                RigidBody::Dynamic,
-                ColliderConstructorHierarchy::new(ColliderConstructor::ConvexDecompositionFromMesh), // dramatically improves performance
-                AngularVelocity(Vec3::new(2.5, 3.5, 1.5)),
-                Transform::from_xyz(0.0, 6.0, 0.0).with_scale((1.3, 1.3, 1.3).into()),
-                PickingInteraction::default(),
             ),
             // Light
             (
@@ -69,3 +64,11 @@ fn setup(
         ],
     ));
 }
+
+/*
+fn on_board_click_handler(trigger: On<Pointer<Click>>, query: Query<&Name>) {
+    if let Ok(name) = query.get(trigger.observer()) {
+        println!("Clicked {}", name);
+    }
+}
+    */

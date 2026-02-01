@@ -15,12 +15,13 @@ impl Plugin for CameraPlugin {
 fn setup(mut commands: Commands) {
     // https://docs.rs/bevy_panorbit_camera/latest/bevy_panorbit_camera/index.html
     commands.spawn((
-        Transform::from_xyz(-2.5, 4.5, 9.0).looking_at(Vec3::ZERO, Dir3::Y),
+        Transform::from_xyz(-0.5, 1.5, 2.0).looking_at(Vec3::ZERO, Dir3::Y),
         PanOrbitCamera {
             pitch_lower_limit: Some(0.0),
             allow_upside_down: false,
             ..default()
         },
         DespawnOnExit(AppState::Playing),
+        MeshPickingCamera,
     ));
 }

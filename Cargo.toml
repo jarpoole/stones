@@ -22,9 +22,10 @@ opt-level = "s"
 strip = "debuginfo"
 
 [dependencies]
-avian3d = { version = "0.4.1", features = [
-    "collider-from-mesh",
-    "bevy_picking",
+avian3d = { version = "0.4.1", features = ["collider-from-mesh"] }
+bevy = { version = "0.17.3", features = [
+    "asset_processor",
+    "jpeg",
+    "bevy_mesh_picking_backend",
 ] }
-bevy = { version = "0.17.3", features = ["asset_processor", "jpeg"] }
 bevy_panorbit_camera = "0.33.1"

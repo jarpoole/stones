@@ -26,3 +26,7 @@ trunk serve
 12. Right click the collection instance in the viewport, and select `Set Origin` => `Origin to Center of Mass (Volume)`
 13. Snap the collection instance to the viewport origin by selecting it and doing `alt` + `g` (clear location command)
 14. Export as `.gltf`/`.glb` and make sure to expand the `Include` dropdown and select `Limit to Visible Objects`
+
+### Infra
+
+Goal is to stick within the AWS free tier: https://builder.aws.com/content/2x3YIkmiaf7fx3C7b5LZKfVZDw4/understanding-the-aws-free-tier-what-you-can-do-for-dollar0
