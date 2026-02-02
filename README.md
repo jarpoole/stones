@@ -21,8 +21,8 @@ trunk serve
 7. Install the [blenderkit add-on](https://www.blenderkit.com/get-blenderkit/) add-on
 8. Select each mesh/object, delete any current materials in the `Materials` tab of the `Properties` pane with the minus button, and add a new material by searching in blenderkit
 9. Select all the objects/meshes, right click and select `New Collection`
-10. Right click the collection in the `Outliner` tree view and select `Instance to Scene` 
-11. Hide the original collection by right clicking and selecting `Visibility` => `Hide` 
+10. Right click the collection in the `Outliner` tree view and select `Instance to Scene`
+11. Hide the original collection by right clicking and selecting `Visibility` => `Hide`
 12. Right click the collection instance in the viewport, and select `Set Origin` => `Origin to Center of Mass (Volume)`
 13. Snap the collection instance to the viewport origin by selecting it and doing `alt` + `g` (clear location command)
 14. Export as `.gltf`/`.glb` and make sure to expand the `Include` dropdown and select `Limit to Visible Objects`
@@ -30,3 +30,19 @@ trunk serve
 ### Infra
 
 Goal is to stick within the AWS free tier: https://builder.aws.com/content/2x3YIkmiaf7fx3C7b5LZKfVZDw4/understanding-the-aws-free-tier-what-you-can-do-for-dollar0
+
+Install based on https://developer.hashicorp.com/terraform/install
+
+```bash
+brew tap hashicorp/tap
+brew install hashicorp/tap/terraform
+```
+
+```bash
+aws login
+```
+
+```bash
+cd ./infra
+terraform apply
+```
