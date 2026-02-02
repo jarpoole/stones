@@ -6,7 +6,8 @@ on:
       - main # or your deployment branch
 
 permissions:
-  id-token: write
+  id-token: write # Allows OIDC login flow with AWS
+  contents: read
 
 jobs:
   deploy:
