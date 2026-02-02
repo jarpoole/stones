@@ -17,7 +17,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - uses: aws-actions/configure-aws-credentials
+      - uses: aws-actions/configure-aws-credentials@56d6a583f00f6bad6d19d91d53a7bc3b8143d0e9 # v5.1.1
+
 
 #      - name: Sync S3 Bucket
 #        env:
