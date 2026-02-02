@@ -19,23 +19,23 @@ jobs:
 
       - uses: aws-actions/configure-aws-credentials
 
-      - name: Sync S3 Bucket
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
-          S3_BUCKET: ${{ secrets.S3_BUCKET }}
-        run: |
-          aws s3 sync ./site s3://$S3_BUCKET --delete
-
-      - name: Invalidate CloudFront cache
-        if: ${{ secrets.CLOUDFRONT_DIST_ID }}
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
-          CLOUDFRONT_DIST_ID: ${{ secrets.CLOUDFRONT_DIST_ID }}
-        run: |
-          aws cloudfront create-invalidation \
-            --distribution-id $CLOUDFRONT_DIST_ID \
-            --paths "/*"
+#      - name: Sync S3 Bucket
+#        env:
+#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+#          S3_BUCKET: ${{ secrets.S3_BUCKET }}
+#        run: |
+#          aws s3 sync ./site s3://$S3_BUCKET --delete
+#
+#      - name: Invalidate CloudFront cache
+#        if: ${{ secrets.CLOUDFRONT_DIST_ID }}
+#        env:
+#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+#          CLOUDFRONT_DIST_ID: ${{ secrets.CLOUDFRONT_DIST_ID }}
+#        run: |
+#          aws cloudfront create-invalidation \
+#            --distribution-id $CLOUDFRONT_DIST_ID \
+#            --paths "/*"
