@@ -18,32 +18,27 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@0c366fd6a839edf440554fa01a7085ccba70ac98 # v6.0.1
 
-      - uses: aws-actions/configure-aws-credentials@56d6a583f00f6bad6d19d91d53a7bc3b8143d0e9 # v5.1.1
+      - name: Install Toolchain
+        run: |
+          cargo install --locked trunk
+          rustup target add wasm32-unknown-unknown
+
+      - name: Build
+        run: |
+          trunk build --release
+
+      - name: Login to AWS
+        uses: aws-actions/configure-aws-credentials@56d6a583f00f6bad6d19d91d53a7bc3b8143d0e9 # v5.1.1
         with:
           role-to-assume: arn:aws:iam::122941220524:role/stones-github-actions-deploy-role
           aws-region: us-east-2
 
-      - name: Additional steps
+      - name: Sync S3 Bucket
         run: |
-          aws sts get-caller-identity
+          aws s3 sync ./dist s3://jarpoole-stones --delete
 
-#      - name: Sync S3 Bucket
-#        env:
-#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
-#          S3_BUCKET: ${{ secrets.S3_BUCKET }}
-#        run: |
-#          aws s3 sync ./site s3://$S3_BUCKET --delete
-#
-#      - name: Invalidate CloudFront cache
-#        if: ${{ secrets.CLOUDFRONT_DIST_ID }}
-#        env:
-#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
-#          CLOUDFRONT_DIST_ID: ${{ secrets.CLOUDFRONT_DIST_ID }}
-#        run: |
-#          aws cloudfront create-invalidation \
-#            --distribution-id $CLOUDFRONT_DIST_ID \
-#            --paths "/*"
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id EURO0V9P5Q582 \
+            --paths "/*"
