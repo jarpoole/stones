@@ -21,7 +21,7 @@ module "storage" {
 module "github_oidc" {
   source                     = "./github_oidc"
   cloudfront_distribution_id = module.storage.cloudfront_distribution_id
-  repo                       = "https://github.com/jarpoole/stones"
+  repo                       = "jarpoole/stones"
   project                    = "stones"
   s3_bucket                  = module.storage.s3_bucket
   account_id                 = "122941220524"

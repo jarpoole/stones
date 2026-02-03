@@ -4,6 +4,7 @@
     "esbenp.prettier-vscode",
     "tamasfe.even-better-toml",
     "streetsidesoftware.code-spell-checker",
-    "hashicorp.terraform"
+    "hashicorp.terraform",
+    "github.vscode-github-actions"
   ]
 }
