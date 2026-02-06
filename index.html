@@ -9,5 +9,16 @@
     <link data-trunk rel="copy-dir" href="assets" />
     <!-- Set display:block to remove scrollbars -->
     <canvas id="bevy-canvas" style="display: block"></canvas>
+    <!-- Add a loading bar with will be hidden by the initializer when the wasm finishes loading -->
+    <link
+      rel="rust"
+      href="Cargo.toml"
+      data-trunk
+      data-initializer="initializer.mjs"
+    />
+    <link data-trunk rel="css" href="styles.css" />
+    <div class="loading-container">
+      <div id="loading-bar" class="loading-bar"></div>
+    </div>
   </body>
 </html>
